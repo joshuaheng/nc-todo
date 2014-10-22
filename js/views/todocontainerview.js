@@ -52,7 +52,6 @@ function($, Backbone, _, todocontainertemplate, todoitemtemplate, TodoModel, ToD
 					self.renderTodoItems(collection);
 					//Initialize client side reordering of todos using jquery-ui
 					$("#todos").sortable();
-					$("#todos").disableSelection();
 					//Updates the count of completed todos against total todos.
 					formhelper.updateCompletedCount(collection, true);
 				},
