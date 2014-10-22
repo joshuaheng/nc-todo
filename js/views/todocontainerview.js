@@ -150,7 +150,7 @@ function($, Backbone, _, todocontainertemplate, todoitemtemplate, TodoModel, ToD
 						$("#save-success-"+response.id).css({"visibility":"visible"});
 						setTimeout(function() {
 						     $("#save-success-"+response.id).fadeOut(function(){
-						     	$("#save-success-"+response.id).css({"display": "block","visibility": "hidden"});  // <-- Style Overwrite
+						     	$("#save-success-"+response.id).css({"display": "inline","visibility": "hidden"});  // <-- Style Overwrite
 						     });
 						}, 2000);
 					}
