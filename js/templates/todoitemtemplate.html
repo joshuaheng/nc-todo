@@ -1,0 +1,23 @@
+<% _.each(collection, function(model) { %>
+<li class="ui-state-default">
+  <div class="form-group">
+  <h3>
+    <div class="input-group">
+    <span class="form-control interactive-glyphicon glyphicon glyphicon-resize-vertical" title="Drag to reorder"></span>
+    <span class="form-control interactive-glyphicon glyphicon glyphicon-zoom-in viewtodo" title="Click to view todo" data-id="<%- model.id %>" ></span>
+      <div class="input-group-addon">
+      <% if(model.is_complete) {%>
+         <span><input type="checkbox" data-id=<%- model.id %> checked></span>
+         </div>
+         <input type="text" class="form-control edit-todo todo-completed" value='<%- model.description %>' name="todocontent" data-id="<%- model.id %>" data-is_complete=<%- model.is_complete %>></input>
+      <% } else {%>
+         <input type="checkbox" data-id=<%- model.id %>>
+         </div>
+         <input type="text" class="form-control edit-todo" value='<%- model.description %>' name="todocontent" data-id="<%- model.id %>" data-is_complete=<%- model.is_complete %>></input>
+      <% } %> 
+    </div>
+    </h3>
+  </div>
+  <hr>
+</li>
+<% }); %>

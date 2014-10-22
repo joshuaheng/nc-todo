@@ -1,0 +1,51 @@
+#pagetitle{
+	font-size: 5em;
+	text-align: center;
+	color: #f35626;
+	background-image: -webkit-linear-gradient(92deg,#f35626,#feab3a);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-animation: hue 60s infinite linear;
+}
+
+#loginformcol, #signupformcol{
+  padding-top: 30px;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+.form-control-feedback{
+	line-height: 54px;
+	top: 0px;
+	right: 10px;
+}
+
+/**Anchor tag styling for switching between login/signup form**/
+.alternateform{
+	margin-top: 15px;
+	text-align: center;
+}
+
+.alternateform a, .alternateform a:hover{
+	color:#EF9811;
+	text-decoration: none;
+	letter-spacing: 1.5px;
+	cursor: pointer;
+}
+
+.loadinggif{
+	height: 50px;
+	width: 50px;
+	display: inline-block;
+}
+
+/**Page title animation**/
+@-webkit-keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+  }
+
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+  }
+}

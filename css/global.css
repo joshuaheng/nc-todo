@@ -1,0 +1,62 @@
+.center{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	width: 25%;
+}
+
+#main{
+	height: 100%;
+}
+
+.container{
+	height: 100%;
+	position: relative;
+}
+
+.errormsg{
+	color:#a94442;
+	display:none;
+}
+
+.btn-default[disabled]{
+	background-color: transparent;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+.form-control{
+	background-color: transparent;
+	height: inherit;
+	font-size: inherit;
+}
+
+.btn, .btn-default{
+	width: 100%;
+	font-size: 1.5em;
+	background-color: transparent;
+	color: white;
+}
+.btn:hover{
+	background-color: transparent;
+	color: white;
+}
+
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open>.dropdown-toggle.btn-default{
+	background-color: transparent;
+	color: white;
+}
+
+li{
+	background-color:#121314;
+}
+
+.navbar-right li{
+	background-color: transparent;
+}

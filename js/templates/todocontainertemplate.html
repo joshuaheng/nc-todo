@@ -1,0 +1,57 @@
+<nav class="navbar navbar-inverse" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Todo App</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li><button class="btn" id="logout">Logout</button></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container" id="todocontainer">
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      <form role="form" class="form-horizontal" id="todoform">
+        <div class="form-group">
+          <div class="col-md-12">
+          <h1><input type="text" class="form-control" id="newtodo" placeholder="Enter todo" autofocus name="newtodocontent"></h1>
+          </div>
+        </div>
+        <button class="btn" id="newtodobtn">Add todo</button>
+        <hr class="control-hr">
+        <ul class="list-inline" id="todo-sub-op">
+        <li><button class="btn" id="markallcomplete" data-completeflag=true>Mark All<br>Complete</button></li>
+        <li><button class="btn" id="markallincomplete" data-completeflag=false>Mark All<br>Incomplete</button></li>
+        <li><button class="btn" id="showallcomplete" data-showallflag=true>Show All<br>Complete</button></li>
+        <li><button class="btn" id="showallcomplete" data-showallflag=false>Show All<br>Incomplete</button></li>
+        <li><button class="btn" id="showall" >Show All</button></li>
+        </ul>
+        <hr class="control-hr">
+        </form>
+        <div><h3 id="totalcompletenum"></h3></div>
+        <hr class="control-hr">
+        <ul class="list-unstyled" id="todos"></ul>    
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">  
+      <div class="modal-body"><h2 id="modal-main-content"></h2></div> 
+    </div>
+  </div>
+</div>
