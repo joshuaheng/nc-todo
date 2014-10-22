@@ -13,9 +13,18 @@
 	width: 100%;
 }
 
-.interactive-glyphicon{
-	width: 35px!important;
+.interactive{
+	width: auto;
+	padding-left: 5px;
+	padding-right: 5px;
 	cursor:pointer;
+	display: inline;
+}
+
+.interactive-icons h3{
+	display: inline;
+	width: 35px;
+	color: white;
 }
 .input-group-addon{
 	background-color: transparent;
@@ -27,6 +36,7 @@
 	padding-right: 10px;
 	position: relative;
 	top: 2px;
+	text-align: left;
 }
 
 .edit-todo{
@@ -47,10 +57,11 @@
 	top: calc(50% - 200px) !important;
 }
 
-#totalcompletenum{
+.todo-sublabels{
 	color: white;
 	text-align: center;
 	font-weight: bold;
+	letter-spacing: 1.3px;
 }
 
 .control-hr{
@@ -61,6 +72,17 @@
 	display:none!important;
 }
 
+.save-success-icon{
+	color: rgb(9, 113, 9)!important;
+	visibility: hidden;
+	font-size:large;
+}
+
+.curr-todo-container h3{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
 input[type=checkbox] {
   /* All browsers except webkit*/
   transform: scale(1.5);
@@ -68,4 +90,79 @@ input[type=checkbox] {
   /* Webkit browsers*/
   -webkit-transform: scale(1.5);
   cursor:pointer;
+  margin-left: 5px;
+  margin-right: 5px;
+  position: relative;
+  bottom: 4px;
+}
+/* firefox fix */
+.img-responsive {
+    width: 100%;
+}
+
+/* vertical alignment styles */
+.col-top {
+    vertical-align:top;
+}
+.col-middle {
+    vertical-align:middle;
+}
+.col-bottom {
+    vertical-align:bottom;
+}
+
+/* columns of same height styles */
+.container-xs-height {
+    display:table;
+    padding-left:0px;
+    padding-right:0px;
+}
+.row-xs-height {
+    display:table-row;
+}
+.col-xs-height {
+    display:table-cell;
+    float:none;
+}
+@media (min-width: 768px) {
+    .container-sm-height {
+        display:table;
+        padding-left:0px;
+        padding-right:0px;
+    }
+    .row-sm-height {
+        display:table-row;
+    }
+    .col-sm-height {
+        display:table-cell;
+        float:none;
+    }
+}
+@media (min-width: 992px) {
+    .container-md-height {
+        display:table;
+        padding-left:0px;
+        padding-right:0px;
+    }
+    .row-md-height {
+        display:table-row;
+    }
+    .col-md-height {
+        display:table-cell;
+        float:none;
+    }
+}
+@media (min-width: 1200px) {
+    .container-lg-height {
+        display:table;
+        padding-left:0px;
+        padding-right:0px;
+    }
+    .row-lg-height {
+        display:table-row;
+    }
+    .col-lg-height {
+        display:table-cell;
+        float:none;
+    }
 }

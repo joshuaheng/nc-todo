@@ -18,7 +18,7 @@ define(['jquery',
 			});
 		},
 		comparator: function(Todo){
-			//Returns the collection sorted with the latest todos at the top
+			//Returns the collection sorted with the most current todos at the top
 			return -Todo.get('id');
 		}
 	});	

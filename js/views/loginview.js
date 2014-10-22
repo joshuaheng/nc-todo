@@ -41,7 +41,7 @@ function($, Backbone, _, logintemplate, loadingspinner, formhelper){
 
 		login:function(e){
 			e.preventDefault();
-			//Escape string to prevent XSS attacks
+			//Escape user input to prevent XSS attacks
 			var email = _.escape($("#useremail").val());
 			var password = _.escape($("#userpassword").val());
 			if(!email || !password){
@@ -90,5 +90,5 @@ function($, Backbone, _, logintemplate, loadingspinner, formhelper){
 			window.location.hash = "signup";	
 		}
 	});	
-	return new LoginView();
+	return LoginView;
 });

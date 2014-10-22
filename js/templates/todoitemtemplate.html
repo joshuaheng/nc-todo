@@ -1,23 +1,25 @@
 <% _.each(collection, function(model) { %>
 <li class="ui-state-default">
-  <div class="form-group">
-  <h3>
-    <div class="input-group">
-    <span class="form-control interactive-glyphicon glyphicon glyphicon-resize-vertical" title="Drag to reorder"></span>
-    <span class="form-control interactive-glyphicon glyphicon glyphicon-zoom-in viewtodo" title="Click to view todo" data-id="<%- model.id %>" ></span>
-      <div class="input-group-addon">
-      <% if(model.is_complete) {%>
-         <span><input type="checkbox" data-id=<%- model.id %> checked></span>
-         </div>
-         <input type="text" class="form-control edit-todo todo-completed" value='<%- model.description %>' name="todocontent" data-id="<%- model.id %>" data-is_complete=<%- model.is_complete %>></input>
-      <% } else {%>
-         <input type="checkbox" data-id=<%- model.id %>>
-         </div>
-         <input type="text" class="form-control edit-todo" value='<%- model.description %>' name="todocontent" data-id="<%- model.id %>" data-is_complete=<%- model.is_complete %>></input>
-      <% } %> 
-    </div>
-    </h3>
+<div class="row row-sm-height">
+  <div class="col-md-3 interactive-icons col-sm-height col-middle">
+    <h3><span class="interactive glyphicon glyphicon-resize-vertical" title="Drag to reorder"></span></h3>
+    <h3><span class="interactive glyphicon glyphicon-zoom-in viewtodo" title="Click to view todo" data-id="<%- model.id %>" ></span></h3>
+    <% if(model.is_complete) {%>
+    <span><input class="interactive" type="checkbox" checked data-id=<%- model.id %>></span>
+    <% } else {%>
+    <h3><span><input class="interactive" type="checkbox" data-id=<%- model.id %>></span></h3>
+    <% } %>
+    <h3><span class="interactive glyphicon glyphicon-ok save-success-icon" id="save-success-<%- model.id %>"></span></h3>  
   </div>
-  <hr>
+  <div class="col-md-9 curr-todo-container col-sm-height col-middle">
+  <% if(model.is_complete) {%>
+    <span><h3><input type="text" class="form-control edit-todo todo-completed" value='<%- model.description %>' name="todocontent" data-id="<%- model.id %>" data-is_complete=<%- model.is_complete %> title="Click to edit. Hit Enter to save."></input></h3></span>
+  <% } else {%>
+    <span><h3><input type="text" class="form-control edit-todo" value='<%- model.description %>' name="todocontent" data-id="<%- model.id %>" data-is_complete=<%- model.is_complete %> title="Click to edit. Hit Enter to save."></input></h3></span>
+  <% } %>
+  </div>
+</div>
+<hr>
 </li>
 <% }); %>
+

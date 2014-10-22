@@ -8,9 +8,9 @@ define([
 function($, Backbone, _, LoginView, SignupView, ToDoContainerView){
 	var Router = Backbone.Router.extend({
 		initialize: function(){
-			this.LoginView = LoginView;
-			this.SignupView = SignupView;
-			this.ToDoContainerView = ToDoContainerView;
+			this.LoginView = new LoginView();
+			this.SignupView = new SignupView();
+			this.ToDoContainerView = new ToDoContainerView();
 			Backbone.history.start();
 		},
 		routes: {
@@ -19,6 +19,7 @@ function($, Backbone, _, LoginView, SignupView, ToDoContainerView){
 			'todos':'todos',
 		},
 		home: function(){
+			//User is logged in.
 			if(localStorage.uid != undefined){
 				window.location.hash = 'todos';
 			}

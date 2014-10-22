@@ -13,9 +13,7 @@ define([
 		'jqueryui'],
 function($, Backbone, _, todocontainertemplate, todoitemtemplate, TodoModel, ToDoCollection, loadingspinner, formhelper){
 	var ToDoContainerView = Backbone.View.extend({
-		el: '#main',
-		//Define error messages happening within this view.
-		
+		el: '#main',		
 		templatecontainer: _.template(todocontainertemplate),
 		events: {
 			'click #newtodobtn': 'addTodo',
@@ -50,10 +48,31 @@ function($, Backbone, _, todocontainertemplate, todoitemtemplate, TodoModel, ToD
 			this.collection.fetch({
 				data:{'user_id':localStorage.uid, 'api_token':localStorage.atok},
 				success: function(collection, response, options){
+					//Render fetched collection. 
 					self.renderTodoItems(collection);
+					//Initialize client side reordering of todos using jquery-ui
 					$("#todos").sortable();
 					$("#todos").disableSelection();
+					//Updates the count of completed todos against total todos.
 					formhelper.updateCompletedCount(collection, true);
+				},
+				error:function(collection, response, options){
+					var errormsg = JSON.parse(response.responseText).error;
+					if(errormsg == "Please sign in first."){
+						/*The user have logged in through a different browser. The access_token that was saved in this localStorage is invalid. 
+						Redirects user to login again.*/
+						$('#modal-main-content').html("Oops, seems like your session has expired. You will be redirected to the login page shortly.");
+						$('#myModal').modal('show');
+						localStorage.clear();
+						setTimeout(function() {
+						//Hides the modal. when modal has been hidden, redirect user to login page.
+						  $('#myModal').modal('hide');
+						  $('#myModal').on('hidden.bs.modal', function (e) {
+							  window.location.hash = '';
+							}); 
+						}, 8000);
+						
+					}
 				}
 			});
 		},
@@ -92,7 +111,8 @@ function($, Backbone, _, todocontainertemplate, todoitemtemplate, TodoModel, ToD
 				var updated_description = _.escape(currentTarget.val());
 				todo.set('description',updated_description);
 				var desc = {'description': updated_description, 'is_complete':todo.get('is_complete')};
-				this.updateTodo(todo, desc, currentTarget.data('id'));
+				//Pass update description to helper function to update model
+				this.updateTodo(todo, desc, currentTarget.data('id'), "EDITDESC");
 			}
 		},
 		//Function to mark a todo as checked
@@ -102,6 +122,7 @@ function($, Backbone, _, todocontainertemplate, todoitemtemplate, TodoModel, ToD
 			var is_completed = currentTarget.is(':checked');
 			todo.set('is_complete', is_completed);
 			var desc = {'description': todo.get('description'),'is_complete':is_completed};
+			//Pass updated description to helper function to update model
 			this.updateTodo(todo, desc, currentTarget.data('id'));
 		},
 		//Function to mark all todos as complete or incomplete.
@@ -115,10 +136,26 @@ function($, Backbone, _, todocontainertemplate, todoitemtemplate, TodoModel, ToD
 				self.updateTodo(todo, desc, todo.get('id'));
 			});
 		},
-		//Function to update todo model. Handles PUT requests
-		updateTodo: function(todo, desc, id){
+		//Helper Function to update todo model. Handles PUT requests
+		updateTodo: function(todo, desc, id, savetype){
+			//savetype is an optional parameter. Used to define if update was triggered because of updated description or not.
+			if (typeof savetype === undefined){
+				savetype = "";
+			}
 			todo.url = "http://recruiting-api.nextcapital.com/users/"+localStorage.uid+"/todos/"+id;
-			todo.save({'user_id':localStorage.uid, 'api_token':localStorage.atok, 'todo':desc});
+			todo.save({'user_id':localStorage.uid, 'api_token':localStorage.atok, 'todo':desc},{
+				success:function(model,response){
+					if(savetype === "EDITDESC"){
+						//Display a green tick to represent save success. Fades out in 2 seconds
+						$("#save-success-"+response.id).css({"visibility":"visible"});
+						setTimeout(function() {
+						     $("#save-success-"+response.id).fadeOut(function(){
+						     	$("#save-success-"+response.id).css({"display": "block","visibility": "hidden"});  // <-- Style Overwrite
+						     });
+						}, 2000);
+					}
+				}
+			});
 		},
 		//Function to filter collection of todos based on complete/incomplete and render them.
 		showall: function(e){
@@ -129,20 +166,22 @@ function($, Backbone, _, todocontainertemplate, todoitemtemplate, TodoModel, ToD
 				this.renderTodoItems(this.collection);
 				formhelper.updateCompletedCount(this.collection, true);
 			}
-			//Show todos based on data attribute which filters the todos(true = show all completed, false = show all incomplete)
+			//Show todos based on data attribute which filters the todos (true = show all completed, false = show all incomplete)
 			else{
 				var result = this.collection.where({'is_complete':showallflag});
 				var collection = new ToDoCollection(result);
 				this.renderTodoItems(collection);
 				if(showallflag == false){
+					//Updates count view to display #incomplete todos / #total todos.
 					formhelper.updateCompletedCount(this.collection, false);
 				}
 				else{
+					//Updates count view to display #completed todos / #total todos.
 					formhelper.updateCompletedCount(this.collection, true);
 				}	
 			}
 		},
-		//Function to view a particular todo description in detail
+		//Function to view a particular todo description in detail. Displays the todo in a modal. Primarily for todos that have a long string length.
 		viewtodo: function(e){
 			e.preventDefault();
 			var currentid = $(e.currentTarget).data('id');
@@ -150,6 +189,7 @@ function($, Backbone, _, todocontainertemplate, todoitemtemplate, TodoModel, ToD
 			$('#myModal').modal('show');
 		},
 
+		//Function to logout.
 		logout: function(e){
 			e.preventDefault();	
 			var post_data = {'api_token': localStorage.atok, 'user_id': localStorage.uid};
@@ -160,11 +200,12 @@ function($, Backbone, _, todocontainertemplate, todoitemtemplate, TodoModel, ToD
 	            contentType:"application/json",
 	            data: JSON.stringify(post_data),
 	            success: function (response) {
+	            	//Clears localstorage and redirects user back to login page.
 	            	localStorage.clear();
 	            	window.location.hash = '';
 	            }
 	        });
 		},
 	});	
-	return new ToDoContainerView();
+	return ToDoContainerView;
 });

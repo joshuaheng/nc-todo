@@ -97,6 +97,7 @@ function($, Backbone, _, signuptemplate, loadingspinner){
 	            data: JSON.stringify(post_data),
 	            success: function (response) {
 	            	$("#foo").html("");
+	            	//Saves api_token and user_id to localstorage.
 	                localStorage.atok = response.api_token;
 	                localStorage.uid = response.id;
 	                //load todos view
@@ -122,5 +123,5 @@ function($, Backbone, _, signuptemplate, loadingspinner){
 	        });
 		}
 	});	
-	return new SignupView();
+	return SignupView;
 });
