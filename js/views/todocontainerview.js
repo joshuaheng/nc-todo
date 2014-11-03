@@ -26,6 +26,7 @@ function($, Backbone, _, todocontainertemplate, todoitemtemplate, TodoModel, ToD
 			'click #showall': 'showall',
 			'click .viewtodo': 'viewtodo',
 			'click #logout': 'logout',
+			'click .delete-btn' : 'deleteTodo',
 		},
 
 		initialize: function(){
@@ -44,7 +45,7 @@ function($, Backbone, _, todocontainertemplate, todoitemtemplate, TodoModel, ToD
 			$(this.el).append( this.templatecontainer);
 			var self = this;
 			//Once the main container view is rendered, we will render the collection view
-			this.collection.url = "http://recruiting-api.nextcapital.com/users/"+localStorage.uid+"/todos";
+			this.collection.url = "http://localhost:3000/users/"+localStorage.uid+"/todos";
 			this.collection.fetch({
 				data:{'user_id':localStorage.uid, 'api_token':localStorage.atok},
 				success: function(collection, response, options){
@@ -91,7 +92,7 @@ function($, Backbone, _, todocontainertemplate, todoitemtemplate, TodoModel, ToD
 			}
 			var todo = {'description':description};
 			var newtodo = new TodoModel();
-			newtodo.url = "http://recruiting-api.nextcapital.com/users/"+localStorage.uid+"/todos";
+			newtodo.url = "http://localhost:3000/users/"+localStorage.uid+"/todos";
 			this.collection.add(newtodo);
 			newtodo.save({'user_id':localStorage.uid, 'api_token':localStorage.atok, 'todo':todo},{
 				success:function(model,response){
@@ -141,7 +142,7 @@ function($, Backbone, _, todocontainertemplate, todoitemtemplate, TodoModel, ToD
 			if (typeof savetype === undefined){
 				savetype = "";
 			}
-			todo.url = "http://recruiting-api.nextcapital.com/users/"+localStorage.uid+"/todos/"+id;
+			todo.url = "http://localhost:3000/users/"+localStorage.uid+"/todos/"+id;
 			todo.save({'user_id':localStorage.uid, 'api_token':localStorage.atok, 'todo':desc},{
 				success:function(model,response){
 					if(savetype === "EDITDESC"){
@@ -188,13 +189,31 @@ function($, Backbone, _, todocontainertemplate, todoitemtemplate, TodoModel, ToD
 			$('#myModal').modal('show');
 		},
 
+		deleteTodo: function(e){
+			var currentid = $(e.currentTarget).data('id');
+			var todo = this.collection.get(currentid);
+			var self = this;
+			var post_data = {'api_token': localStorage.atok};
+			$.ajax({
+	            type:'DELETE',
+	            url: 'http://localhost:3000/users/'+localStorage.uid+'/todos/'+currentid,
+	            contentType:"application/json",
+	            data: JSON.stringify(post_data),
+	            success: function(response){
+	            	self.collection.remove(todo);
+	            	self.renderTodoItems(self.collection);
+	            	console.log("todo remove completed");
+	            }
+	        });
+		},
+
 		//Function to logout.
 		logout: function(e){
 			e.preventDefault();	
 			var post_data = {'api_token': localStorage.atok, 'user_id': localStorage.uid};
 			$.ajax({
 	            type:'DELETE',
-	            url: 'http://recruiting-api.nextcapital.com/users/sign_out',
+	            url: 'http://localhost:3000/users/sign_out',
 	            dataType: "text/plain",
 	            contentType:"application/json",
 	            data: JSON.stringify(post_data),

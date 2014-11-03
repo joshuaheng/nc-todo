@@ -92,7 +92,7 @@ function($, Backbone, _, signuptemplate, loadingspinner){
 			this.spinner.spin(target);
 			$.ajax({
 	            type: 'POST',
-	            url: 'http://recruiting-api.nextcapital.com/users',
+	            url: 'http://localhost:3000/users',
 	            contentType:"application/json",
 	            data: JSON.stringify(post_data),
 	            success: function (response) {

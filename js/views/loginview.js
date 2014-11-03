@@ -54,7 +54,7 @@ function($, Backbone, _, logintemplate, loadingspinner, formhelper){
 			var post_data = {'email':email, 'password':password};
 			$.ajax({
 	            type: 'POST',
-	            url: 'http://recruiting-api.nextcapital.com/users/sign_in',
+	            url: 'http://localhost:3000/users/sign_in',
 	            contentType:"application/json",
 	            data: JSON.stringify(post_data),
 	            success: function (response) {

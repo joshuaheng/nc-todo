@@ -17,6 +17,7 @@
   <% } else {%>
     <span><h3><input type="text" class="form-control edit-todo" value='<%- model.description %>' name="todocontent" data-id="<%- model.id %>" data-is_complete=<%- model.is_complete %> title="Click to edit. Hit Enter to save."></input></h3></span>
   <% } %>
+    <button class="delete-btn" data-id=<%- model.id %>>X</button>
   </div>
 </div>
 <hr>
